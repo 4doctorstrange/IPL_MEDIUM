@@ -12,7 +12,7 @@ Steps to run app:\
 2.e- from app import Teams,Schedule_
 2.f- exit()  {exiting python environment}\
 3- app.py  {running app}\
-4- paste the local host link in your browser.\
+4- paste the local host link in your browser.
 
 Pre-requisites:\
 1-Python3 and executing program through cmd
