@@ -28,15 +28,16 @@ class Schedule(db.Model):
 
 def get_schedule():
     all_data=Teams.query.all()
-    for i in all_data:
-        for j in all_data:
-            if i.id==j.id:
-                continue
-            else:
-                sch=Schedule(home_team=i.name,away_team=j.name,venue=i.home_ground)
-                db.session.add(sch)
-                db.session.commit()
-    
+    temp=Schedule.query.all()
+    if len(temp)==0:
+        for i in all_data:
+            for j in all_data:
+                if i.id==j.id:
+                    continue
+                else:
+                    sch=Schedule(home_team=i.name,away_team=j.name,venue=i.home_ground)
+                    db.session.add(sch)
+                    db.session.commit()
 
 
 @app.route('/')
@@ -45,8 +46,12 @@ def index():
 
 @app.route('/register',methods=['GET','POST'])
 def register():
-    all_teams=Teams.query.all() 
     if request.method=='POST':
+        all_teams=Teams.query.all()
+        if len(all_teams)!=0 :
+            db.session.query(Teams).delete()
+            db.session.query(Schedule).delete()
+            db.session.commit()
         global teams
         teams=int(request.form['registeration'])
         flash('*Fill the given form to register a team!')
